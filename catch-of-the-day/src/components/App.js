@@ -6,14 +6,15 @@ import Fish from './Fish';
 import sampleFishes from '../sample-fishes';
 import base from '../base';
 
-class App extends React.Component{
+class App extends React.Component {
 
-	constructor(){
+	constructor() {
 		super();
 
 		this.addFish = this.addFish.bind(this);
 		this.loadSamples = this.loadSamples.bind(this);
 		this.addToOrder = this.addToOrder.bind(this);
+		this.updateFish = this.updateFish.bind(this);
 
 		//initial state
 		this.state = {
@@ -22,17 +23,17 @@ class App extends React.Component{
 		};
 	}
 
-	componentWillMount(){
+	componentWillMount() {
 		//вызывается до того как компонтент рендерится
 		this.ref = base.syncState(`${this.props.params.storeId}/fishes`, {
-			context : this,
+			context: this,
 			state: 'fishes'
 		});
 
 		//check if there is any order in local storage
 		const localStorageRef = localStorage.getItem(`order-${this.props.params.storeId}`);
 
-		if(localStorageRef) {
+		if (localStorageRef) {
 			//update state with local storage state
 			this.setState({
 				order: JSON.parse(localStorageRef)
@@ -45,8 +46,14 @@ class App extends React.Component{
 	}
 
 	componentWillUpdate(nextProps, nextState) {
-		console.log({nextProps, nextState});
+		//console.log({nextProps, nextState});
 		localStorage.setItem(`order-${this.props.params.storeId}`, JSON.stringify(nextState.order));
+	}
+
+	updateFish(key, updatedFish) {
+		const fishes = {...this.state.fishes};
+		fishes[key] = updatedFish;
+		this.setState({fishes});
 	}
 
 	addFish(fish) {
@@ -59,13 +66,13 @@ class App extends React.Component{
 		this.setState({fishes}); //fishes =  fishes: fishes
 	}
 
-	loadSamples(){
+	loadSamples() {
 		this.setState({
 			fishes: sampleFishes
 		})
 	}
 
-	addToOrder(key){
+	addToOrder(key) {
 		//take a copy of state
 		const order = {...this.state.order};
 		//update or add the new number of fish ordered
@@ -74,7 +81,7 @@ class App extends React.Component{
 		this.setState({order}); //order : order
 	}
 
-	render(){
+	render() {
 		return (
 			<div className="catch-of-the-day">
 				<div className="menu">
@@ -90,7 +97,12 @@ class App extends React.Component{
 					order={this.state.order}
 					params={this.props.params}
 				/>
-				<Inventory addFish={this.addFish} loadSamples={this.loadSamples}/>
+				<Inventory
+					addFish={this.addFish}
+					loadSamples={this.loadSamples}
+					fishes={this.state.fishes}
+					updateFish={this.updateFish}
+				/>
 			</div>
 		);
 	}
