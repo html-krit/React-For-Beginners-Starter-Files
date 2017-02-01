@@ -5,3 +5,29 @@
   appear Must set transitionAppear={true} on animation component
 */
 
+.order-enter
+  transition all .5s;
+  transform translateX(-120%)
+  &.order-enter-active
+    transform translateX(0)
+
+.order-leave
+  transition all .5s;
+  transform translateX(0)
+  &.order-enter-active
+    transform translateX(120%)
+
+.count-enter
+  transition all .25s
+  transform translateY(100%)
+  &.count-enter-active
+    transform translateY(0)
+
+.count-leave
+  position absolute
+  left 0
+  bottom 0
+  transition all .25s
+  transform translateY(0)
+  &.count-leave-active
+    transform translateY(-100%)
