@@ -1,9 +1,9 @@
-import  Rebase from 're-base';
+import Rebase from 're-base';
 
 const base = Rebase.createClass({
-	apiKey: "AIzaSyD8gO8azYuH5Rogt7hgHAmd4tHDaQu6Zm4",
-	authDomain: "catch-of-the-day-51a58.firebaseapp.com",
-	databaseURL: "https://catch-of-the-day-51a58.firebaseio.com"
+  apiKey: "AIzaSyCdgXxyNqCZEeY36Ss9i4jFMSUh7FdGi6M",
+  authDomain: "catch-of-the-day-wes-bos.firebaseapp.com",
+  databaseURL: "https://catch-of-the-day-wes-bos.firebaseio.com",
 });
 
 export default base;
